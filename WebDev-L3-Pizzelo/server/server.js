@@ -6,10 +6,7 @@ const connectDB = require('./config/db');
 dotenv.config();
 connectDB();
 
-const User = require('./models/User');
-const Admin = require('./models/Admin');
-const Order = require('./models/Order');
-const Inventory = require('./models/Inventory');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -19,6 +16,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Pizzelo API is running...');
 });
+
+app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
