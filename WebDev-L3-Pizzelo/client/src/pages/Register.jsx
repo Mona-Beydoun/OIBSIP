@@ -92,7 +92,7 @@ function Register() {
         </form>
 
         <p className="auth-footer-link">
-          Already have an account? <Link to="/login">Log in</Link>
+         Already have an account? <Link to="/login/customer">Log in</Link>
         </p>
       </div>
     </div>

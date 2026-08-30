@@ -25,28 +25,18 @@ function Home() {
         </div>
       </nav>
 
-      <section className="hero">
-        <div className="hero-bg-glow"></div>
+      <section className="hero hero-photo">
+        <div className="hero-overlay"></div>
 
-        <div className="hero-visual">
-          <img src="/images/hero-pizza.jpg" alt="pizza" className={`float-pizza p1 slice-hover ${loaded ? 'in' : ''}`} />
-          <img src="/images/pizza-1.jpg" alt="pizza" className={`float-pizza p2 slice-hover ${loaded ? 'in' : ''}`} />
-          <img src="/images/pizza-2.jpg" alt="pizza" className={`float-pizza p3 slice-hover ${loaded ? 'in' : ''}`} />
-          <img src="/images/pizza-3.jpg" alt="pizza" className={`float-pizza p4 slice-hover ${loaded ? 'in' : ''}`} />
-          <img src="/images/pizza-4.jpg" alt="pizza" className={`float-pizza p5 slice-hover ${loaded ? 'in' : ''}`} />
-          <img src="/images/pizza-5.jpg" alt="pizza" className={`float-pizza p6 slice-hover ${loaded ? 'in' : ''}`} />
-        </div>
-
-        <div className={`hero-content ${loaded ? 'in' : ''}`}>
-          <h1 className="stack-heading">
+        <div className={`hero-content hero-content-left ${loaded ? 'in' : ''}`}>
+          <h1 className="stack-heading stack-heading-left">
             <span className="line-white">It's Not Just</span>
             <span className="line-orange">Pizza</span>
             <span className="line-script">It's an experience!</span>
           </h1>
-          <p>
-            WARNING: MAY CAUSE EXTREME HAPPINESS.
+          <p className="hero-p-left">WARNING: MAY CAUSE EXTREME HAPPINESS.
           </p>
-          <div className="hero-actions">
+          <div className="hero-actions hero-actions-left">
             <button className="btn-primary">Customize Your Dream Pizza</button>
             <button className="btn-secondary">See Menu</button>
           </div>
