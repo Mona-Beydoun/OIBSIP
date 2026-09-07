@@ -11,7 +11,7 @@ const createAdmin = async () => {
     console.log('Connected to MongoDB');
 
     const adminEmail = 'monabeydoun.me@gmail.com';
-    const adminPassword = 'Admin123456';
+    const adminPassword = 'Admin1234566';
     const adminName = 'Mona Beydoun';
 
     await Admin.deleteMany({ email: adminEmail }); // clear any partial/failed previous attempt

@@ -9,7 +9,9 @@ import AdminProtectedRoute from './components/AdminProtectedRoute';
 import ForgotPassword from './pages/ForgotPassword';
 import VerifyEmail from './pages/VerifyEmail';
 import ResetPassword from './pages/ResetPassword';
-
+import PizzaBuilder from './pages/PizzaBuilder';
+import OrderSummary from './pages/OrderSummary';
+import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <Routes>
@@ -18,6 +20,7 @@ function App() {
       <Route path="/login" element={<LoginChoice />} />
       <Route path="/login/customer" element={<Login />} />
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/pizza-builder" element={<PizzaBuilder />} />
       <Route
         path="/admin/dashboard"
         element={
@@ -29,6 +32,14 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/verify-email/:token" element={<VerifyEmail />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route
+  path="/order-summary"
+  element={
+    <ProtectedRoute>
+      <OrderSummary />
+    </ProtectedRoute>
+  }
+/>
     </Routes>
   );
 }

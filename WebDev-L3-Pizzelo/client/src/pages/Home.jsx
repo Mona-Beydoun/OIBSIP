@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 function Home() {
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
@@ -37,7 +39,9 @@ function Home() {
           <p className="hero-p-left">WARNING: MAY CAUSE EXTREME HAPPINESS.
           </p>
           <div className="hero-actions hero-actions-left">
-            <button className="btn-primary">Customize Your Dream Pizza</button>
+            <button className="btn-primary" onClick={() => navigate('/pizza-builder')}>
+              Customize Your Dream Pizza
+            </button>
             <button className="btn-secondary">See Menu</button>
           </div>
         </div>
