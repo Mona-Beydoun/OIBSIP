@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePizzaBuilder } from '../context/PizzaBuilderContext';
-import { createOrder } from '../services/orderService';
+import { useAuth } from '../context/AuthContext';
+import { createRazorpayOrder, verifyPayment } from '../services/paymentService';
 import PizzaPreview from '../components/PizzaPreview';
 
 function OrderSummary() {
   const { base, sauce, cheese, vegetables, totalPrice, resetBuilder, isComplete } = usePizzaBuilder();
+  const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [placedOrder, setPlacedOrder] = useState(null);
@@ -14,15 +16,57 @@ function OrderSummary() {
   const handlePlaceOrder = async () => {
     setError('');
     setSubmitting(true);
+
     try {
-      const order = await createOrder({ base, sauce, cheese, vegetables, totalPrice });
-      setPlacedOrder(order);
-      resetBuilder();
+      const { orderId, amount, currency, keyId } = await createRazorpayOrder(totalPrice);
+
+      const options = {
+        key: keyId,
+        amount,
+        currency,
+        name: 'Pizzelo',
+        description: 'Pizza order payment',
+        order_id: orderId,
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+        },
+        theme: {
+          color: '#E8792F',
+        },
+        handler: async (response) => {
+          try {
+            const order = await verifyPayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              base,
+              sauce,
+              cheese,
+              vegetables,
+              totalPrice,
+            });
+            setPlacedOrder(order);
+            resetBuilder();
+          } catch (err) {
+            setError(
+              err.response?.data?.message || 'Payment succeeded but order creation failed. Please contact support.'
+            );
+          } finally {
+            setSubmitting(false);
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            setSubmitting(false);
+          },
+        },
+      };
+
+      const razorpayCheckout = new window.Razorpay(options);
+      razorpayCheckout.open();
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Something went wrong placing your order. Please try again.'
-      );
-    } finally {
+      setError(err.response?.data?.message || 'Could not start payment. Please try again.');
       setSubmitting(false);
     }
   };
@@ -72,7 +116,7 @@ function OrderSummary() {
         <div className="builder-stage summary-stage">
           <div className="summary-panel summary-success">
             <span className="summary-success-icon">✓</span>
-            <h2 className="ingredient-heading">Order Placed!</h2>
+            <h2 className="ingredient-heading">Payment Successful!</h2>
             <p className="summary-success-text">
               Your pizza is on its way to the kitchen. Status: <strong>{placedOrder.status}</strong>
             </p>
@@ -102,7 +146,7 @@ function OrderSummary() {
       <div className="builder-side-copy">
         <span className="side-copy-line1">Last Look</span>
         <span className="side-copy-line2">Before The Oven.</span>
-        
+        <span className="side-copy-script">(no take-backs after this)</span>
       </div>
 
       <div className="builder-stage summary-stage">
@@ -147,7 +191,7 @@ function OrderSummary() {
                 Edit
               </button>
               <button className="btn-primary" onClick={handlePlaceOrder} disabled={submitting}>
-                {submitting ? 'Placing Order...' : 'Place Order'}
+                {submitting ? 'Processing...' : 'Pay & Place Order'}
               </button>
             </div>
           </div>

@@ -1,63 +1,21 @@
 const Order = require('../models/Order');
-const Inventory = require('../models/Inventory');
+const createOrderWithInventory = require('../utils/createOrderWithInventory');
 
-const CATEGORY_MAP = {
-  base: 'bases',
-  sauce: 'sauces',
-  cheese: 'cheeses',
-};
-
-// @desc Create a new order (customer only)
+// @desc Create a new order (customer only) — unpaid/direct path
 const createOrder = async (req, res) => {
   try {
     const { base, sauce, cheese, vegetables, totalPrice } = req.body;
-
-    if (!base || !sauce || !cheese || totalPrice === undefined) {
-      return res.status(400).json({ message: 'Missing required pizza fields' });
-    }
-
-    const veggieList = Array.isArray(vegetables) ? vegetables : [];
-
-    const inventory = await Inventory.findOne();
-    if (!inventory) {
-      return res.status(404).json({ message: 'Inventory not found' });
-    }
-
-    // Validate + collect the items we need to decrement
-    const itemsToDecrement = [];
-
-    const findAndValidate = (categoryKey, itemName) => {
-      const item = inventory[categoryKey].find((i) => i.name === itemName);
-      if (!item) {
-        throw new Error(`"${itemName}" not found in ${categoryKey}`);
-      }
-      if (item.stock <= 0) {
-        throw new Error(`"${itemName}" is out of stock`);
-      }
-      itemsToDecrement.push(item);
-    };
-
-    findAndValidate(CATEGORY_MAP.base, base);
-    findAndValidate(CATEGORY_MAP.sauce, sauce);
-    findAndValidate(CATEGORY_MAP.cheese, cheese);
-    veggieList.forEach((veg) => findAndValidate('vegetables', veg));
-
-    // All valid — now actually decrement
-    itemsToDecrement.forEach((item) => {
-      item.stock -= 1;
-    });
-
-    await inventory.save();
-
-    const order = await Order.create({
-      user: req.user._id,
-      pizza: { base, sauce, cheese, vegetables: veggieList },
+    const order = await createOrderWithInventory({
+      userId: req.user._id,
+      base,
+      sauce,
+      cheese,
+      vegetables,
       totalPrice,
     });
-
     res.status(201).json(order);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
 

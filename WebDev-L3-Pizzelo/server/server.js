@@ -1,13 +1,15 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const adminRoutes = require('./routes/adminRoutes');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const { startStockAlertJob } = require('./jobs/stockAlertJob');
 
-dotenv.config();
 connectDB();
 
 const authRoutes = require('./routes/authRoutes');
@@ -25,6 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/payment', paymentRoutes);
 
 const PORT = process.env.PORT || 5000;
 
