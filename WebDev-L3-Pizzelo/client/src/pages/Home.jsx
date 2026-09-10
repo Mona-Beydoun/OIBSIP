@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import '../App.css';
 
 function Home() {
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <div className="page">
@@ -22,7 +29,16 @@ function Home() {
         <div className="navbar-links">
           <a href="/">Home</a>
           <a href="#">Menu</a>
-          <a href="/login">Login</a>
+          {isAuthenticated ? (
+            <>
+              <a href="/my-orders">My Orders</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); handleLogout(); }}>
+                Log Out
+              </a>
+            </>
+          ) : (
+            <a href="/login">Login</a>
+          )}
           <a href="#">Contact</a>
         </div>
       </nav>

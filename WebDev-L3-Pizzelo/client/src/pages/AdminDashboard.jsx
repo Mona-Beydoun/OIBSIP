@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { getInventory } from '../services/inventoryService';
 import InventoryTable from '../components/InventoryTable';
@@ -6,6 +7,7 @@ import '../App.css';
 
 function AdminDashboard() {
   const { logoutAdmin } = useAdminAuth();
+  const navigate = useNavigate();
   const [inventory, setInventory] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -49,9 +51,14 @@ function AdminDashboard() {
           </p>
         </div>
 
-        <button onClick={logoutAdmin} className="btn-secondary">
-          Log Out
-        </button>
+        <div className="admin-header-actions">
+          <button onClick={() => navigate('/admin/orders')} className="btn-primary">
+            View Orders
+          </button>
+          <button onClick={logoutAdmin} className="btn-secondary">
+            Log Out
+          </button>
+        </div>
       </div>
 
       {inventory && (

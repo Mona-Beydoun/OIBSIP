@@ -476,69 +476,75 @@ body,
 }
 /* Admin Dashboard */
 .admin-dashboard {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: var(--color-bg);
-  padding: 40px 60px;
+  padding: 26px 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 .admin-dashboard h1 {
   font-family: var(--font-heading);
-  font-size: 28px;
+  font-size: 24px;
   color: var(--color-text);
 }
 
 .admin-welcome {
   color: var(--color-text-muted);
-  font-size: 14px;
-  margin-top: 4px;
+  font-size: 13px;
+  margin-top: 3px;
 }
 
 .inventory-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  flex: 1;
+  min-height: 0;
 }
 
 .inventory-section {
   background-color: var(--color-surface);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  padding: 24px;
+  padding: 16px;
 }
 
 .inventory-section-title {
   font-family: var(--font-heading);
-  font-size: 17px;
+  font-size: 14px;
   color: var(--color-primary);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .inventory-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .inventory-table th {
   text-align: left;
   color: var(--color-text-muted);
   font-weight: 600;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 8px 6px;
+  letter-spacing: 0.4px;
+  padding: 6px 4px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .inventory-table td {
-  padding: 10px 6px;
+  padding: 7px 4px;
   color: var(--color-text);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -605,16 +611,22 @@ body,
   background-color: rgba(255, 255, 255, 0.08);
   color: var(--color-text-muted);
 }
+@media (max-width: 1300px) {
+  .inventory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 @media (max-width: 900px) {
   .admin-dashboard {
+    height: auto;
+    overflow: visible;
     padding: 24px;
   }
   .inventory-grid {
     grid-template-columns: 1fr;
   }
 }
-
 /* Orange border around every inventory card */
 .inventory-card {
   background: #1c1c1e;
@@ -1202,4 +1214,213 @@ body,
 .summary-row {
   font-size: 14px;
   padding-bottom: 8px;
+}
+/* Admin Orders */
+.admin-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.orders-table-wrap {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
+  box-shadow: 0 0 20px rgba(232, 121, 47, 0.12);
+  border-radius: 14px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.orders-table {
+  min-width: 900px;
+}
+
+.order-customer-name {
+  font-weight: 600;
+}
+
+.order-customer-email {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.order-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.order-badge-received {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-muted);
+}
+
+.order-badge-kitchen {
+  background-color: rgba(232, 121, 47, 0.18);
+  color: var(--color-primary);
+}
+
+.order-badge-delivery {
+  background-color: rgba(107, 122, 58, 0.18);
+  color: #a5c67a;
+}
+
+.order-status-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-status-select {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--color-text);
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+/* Customer My Orders */
+.my-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.my-order-card {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
+  box-shadow: 0 0 20px rgba(232, 121, 47, 0.12);
+  border-radius: 14px;
+  padding: 22px 26px;
+}
+
+.my-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+
+.my-order-title {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 15px;
+}
+
+.my-order-meta {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.order-tracker {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding-top: 2px;
+}
+
+.order-tracker::before {
+  content: "";
+  position: absolute;
+  top: 19px;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 0;
+}
+
+.order-tracker-fill {
+  position: absolute;
+  top: 19px;
+  left: 5%;
+  height: 2px;
+  background-color: var(--color-primary);
+  z-index: 0;
+  transition: width 0.4s ease;
+  max-width: 90%;
+}
+
+.order-tracker-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.order-tracker-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-muted);
+  opacity: 0.45;
+  transition: all 0.25s ease;
+}
+
+.order-tracker-dot svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* Completed steps: solid filled orange with checkmark */
+.order-tracker-step.done .order-tracker-dot {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #14120a;
+  opacity: 1;
+}
+
+/* Current step: outlined + pulsing glow, visually distinct from done */
+.order-tracker-step.current .order-tracker-dot {
+  background-color: rgba(232, 121, 47, 0.16);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  opacity: 1;
+  width: 40px;
+  height: 40px;
+  animation: tracker-pulse 1.8s ease-in-out infinite;
+}
+
+.order-tracker-step.current .order-tracker-dot svg {
+  width: 19px;
+  height: 19px;
+}
+
+@keyframes tracker-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 121, 47, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(232, 121, 47, 0);
+  }
+}
+
+.order-tracker-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.order-tracker-step.done .order-tracker-label,
+.order-tracker-step.current .order-tracker-label {
+  color: var(--color-text);
+}
+
+.order-tracker-step.current .order-tracker-label {
+  color: var(--color-primary);
+  font-weight: 700;
 }

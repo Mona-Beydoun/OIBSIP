@@ -12,6 +12,8 @@ import ResetPassword from './pages/ResetPassword';
 import PizzaBuilder from './pages/PizzaBuilder';
 import OrderSummary from './pages/OrderSummary';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminOrders from './pages/AdminOrders';
+import UserDashboard from './pages/UserDashboard';
 function App() {
   return (
     <Routes>
@@ -37,6 +39,22 @@ function App() {
   element={
     <ProtectedRoute>
       <OrderSummary />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/admin/orders"
+  element={
+    <AdminProtectedRoute>
+      <AdminOrders />
+    </AdminProtectedRoute>
+  }
+/>
+<Route
+  path="/my-orders"
+  element={
+    <ProtectedRoute>
+      <UserDashboard />
     </ProtectedRoute>
   }
 />
