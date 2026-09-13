@@ -4,22 +4,44 @@ import { calculatePizzaPrice } from '../utils/pricing';
 const PizzaBuilderContext = createContext();
 
 export function PizzaBuilderProvider({ children }) {
-  const [base, setBase] = useState(null);
-  const [sauce, setSauce] = useState(null);
-  const [cheese, setCheese] = useState(null);
-  const [vegetables, setVegetables] = useState([]);
+  const [base, setBaseRaw] = useState(null);
+  const [sauce, setSauceRaw] = useState(null);
+  const [cheese, setCheeseRaw] = useState(null);
+  const [vegetables, setVegetablesRaw] = useState([]);
+  const [photo, setPhoto] = useState(null);
 
+  // Any manual ingredient change (from the builder steps) invalidates the
+  // "real menu photo" since the pizza is no longer exactly that preset.
+  const setBase = (val) => {
+    setBaseRaw(val);
+    setPhoto(null);
+  };
+  const setSauce = (val) => {
+    setSauceRaw(val);
+    setPhoto(null);
+  };
+  const setCheese = (val) => {
+    setCheeseRaw(val);
+    setPhoto(null);
+  };
   const toggleVegetable = (vegName) => {
-    setVegetables((prev) =>
+    setVegetablesRaw((prev) =>
       prev.includes(vegName) ? prev.filter((v) => v !== vegName) : [...prev, vegName]
     );
+    setPhoto(null);
+  };
+  // Used by Menu.jsx to set a whole preset at once — does NOT clear photo,
+  // since Menu sets the photo itself right after calling this.
+  const setVegetablesList = (list) => {
+    setVegetablesRaw(list);
   };
 
   const resetBuilder = () => {
-    setBase(null);
-    setSauce(null);
-    setCheese(null);
-    setVegetables([]);
+    setBaseRaw(null);
+    setSauceRaw(null);
+    setCheeseRaw(null);
+    setVegetablesRaw([]);
+    setPhoto(null);
   };
 
   const totalPrice = useMemo(
@@ -38,6 +60,9 @@ export function PizzaBuilderProvider({ children }) {
     setCheese,
     vegetables,
     toggleVegetable,
+    setVegetablesList,
+    photo,
+    setPhoto,
     totalPrice,
     isComplete,
     resetBuilder,

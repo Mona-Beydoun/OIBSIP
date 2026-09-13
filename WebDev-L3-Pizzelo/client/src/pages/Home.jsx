@@ -28,7 +28,7 @@ function Home() {
         </div>
         <div className="navbar-links">
           <a href="/">Home</a>
-          <a href="#">Menu</a>
+        <a href="/menu">Menu</a>
           {isAuthenticated ? (
             <>
               <a href="/my-orders">My Orders</a>
@@ -39,7 +39,7 @@ function Home() {
           ) : (
             <a href="/login">Login</a>
           )}
-          <a href="#">Contact</a>
+         <a href="/contact">Contact</a>
         </div>
       </nav>
 

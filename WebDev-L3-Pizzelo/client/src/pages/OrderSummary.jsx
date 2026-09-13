@@ -6,7 +6,7 @@ import { createRazorpayOrder, verifyPayment } from '../services/paymentService';
 import PizzaPreview from '../components/PizzaPreview';
 
 function OrderSummary() {
-  const { base, sauce, cheese, vegetables, totalPrice, resetBuilder, isComplete } = usePizzaBuilder();
+    const { base, sauce, cheese, vegetables, photo, totalPrice, resetBuilder, isComplete } = usePizzaBuilder();
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -140,21 +140,25 @@ function OrderSummary() {
         <span className="logo-text builder-brand-logo">
           PI<span className="logo-zz">ZZ</span>ELO
         </span>
-        <span className="builder-brand-tagline">let's build your pizza</span>
+       
       </div>
 
       <div className="builder-side-copy">
         <span className="side-copy-line1">Last Look</span>
         <span className="side-copy-line2">Before The Oven.</span>
-        <span className="side-copy-script">(no take-backs after this)</span>
+        
       </div>
 
       <div className="builder-stage summary-stage">
         <div className="summary-panel">
           <h2 className="ingredient-heading">Review Your Order</h2>
 
-          <div className="summary-pizza-small">
-            <PizzaPreview />
+                   <div className="summary-pizza-small">
+            {photo ? (
+              <img className="summary-pizza-photo" src={photo} alt="Your pizza" />
+            ) : (
+              <PizzaPreview />
+            )}
           </div>
 
           <div className="summary-list">
@@ -183,9 +187,9 @@ function OrderSummary() {
               Total<span>${totalPrice.toFixed(2)}</span>
             </div>
             <div className="builder-nav-buttons">
-              <button
+                           <button
                 className="btn-secondary"
-                onClick={() => navigate('/pizza-builder')}
+                onClick={() => navigate(photo ? '/menu' : '/pizza-builder')}
                 disabled={submitting}
               >
                 Edit

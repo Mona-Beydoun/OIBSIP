@@ -9,7 +9,7 @@ const inventoryRoutes = require('./routes/inventoryRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const { startStockAlertJob } = require('./jobs/stockAlertJob');
-
+const contactRoutes = require('./routes/contactRoutes');
 connectDB();
 
 const authRoutes = require('./routes/authRoutes');
@@ -28,7 +28,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payment', paymentRoutes);
-
+app.use('/api/contact', contactRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

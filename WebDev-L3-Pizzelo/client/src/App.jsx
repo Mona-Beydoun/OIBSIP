@@ -14,6 +14,8 @@ import OrderSummary from './pages/OrderSummary';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminOrders from './pages/AdminOrders';
 import UserDashboard from './pages/UserDashboard';
+import Menu from './pages/Menu';
+import Contact from './pages/Contact';
 function App() {
   return (
     <Routes>
@@ -58,6 +60,8 @@ function App() {
     </ProtectedRoute>
   }
 />
+<Route path="/menu" element={<Menu />} />
+<Route path="/contact" element={<Contact />} />
     </Routes>
   );
 }
