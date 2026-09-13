@@ -58,7 +58,9 @@ function Home() {
             <button className="btn-primary" onClick={() => navigate('/pizza-builder')}>
               Customize Your Dream Pizza
             </button>
-            <button className="btn-secondary">See Menu</button>
+                       <button className="btn-secondary" onClick={() => navigate('/menu')}>
+              See Menu
+            </button>
           </div>
         </div>
       </section>
