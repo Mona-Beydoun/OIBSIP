@@ -59,7 +59,7 @@ function UserDashboard() {
   }, []);
 
   return (
-    <div className="admin-dashboard">
+        <div className="admin-dashboard my-orders-page">
       <div className="admin-dashboard-header">
         <div>
           <h1>My Orders</h1>

@@ -621,7 +621,20 @@ body,
   .admin-dashboard {
     height: auto;
     overflow: visible;
-    padding: 24px;
+    padding: 20px;
+  }
+  .admin-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .admin-header-actions {
+    width: 100%;
+  }
+  .admin-header-actions .btn-primary,
+  .admin-header-actions .btn-secondary {
+    flex: 1;
+    text-align: center;
   }
   .inventory-grid {
     grid-template-columns: 1fr;
@@ -1044,7 +1057,7 @@ body,
   gap: 10px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .builder-page {
     height: auto;
     min-height: 100vh;
@@ -1054,13 +1067,32 @@ body,
     top: 20px;
     left: 24px;
   }
-
+  .builder-stage {
+    padding: 100px 20px 30px;
+    justify-content: center;
+  }
   .builder-content-wrap {
     height: auto;
-    gap: 28px;
+    max-width: 100%;
+    margin-left: 0;
+    gap: 24px;
   }
   .builder-progress-rail {
     max-width: 100%;
+  }
+  .pizza-preview-stack {
+    width: clamp(200px, 55vw, 280px);
+  }
+  .ingredient-sticker-row {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+  .builder-footer {
+    gap: 14px;
+  }
+  .builder-nav-buttons {
+    width: 100%;
+    justify-content: center;
   }
 }
 /* Playful side copy filling the left gap */
@@ -1522,6 +1554,8 @@ body,
   .menu-page-fit {
     height: auto;
     overflow: visible;
+    background-size: cover;
+    background-position: center;
   }
   .menu-page-fit .menu-content {
     overflow: visible;
@@ -1544,9 +1578,40 @@ body,
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .menu-page-fit .menu-content {
+    padding-top: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .menu-page-fit .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .menu-item-photo {
+    width: clamp(110px, 38vw, 150px);
+    height: clamp(110px, 38vw, 150px);
+  }
+  .menu-item-name {
+    font-size: 13px;
+  }
+  .menu-item-desc {
+    font-size: 11px;
+  }
+  .menu-item-footer .btn-primary {
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+}
+
+@media (max-width: 480px) {
   .menu-page-fit .menu-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .menu-item-photo {
+    width: clamp(140px, 45vw, 180px);
+    height: clamp(140px, 45vw, 180px);
   }
 }
 /* Contact page — fit to one screen, no scroll, real photo background */
@@ -1667,13 +1732,38 @@ body,
 @media (max-width: 800px) {
   .contact-grid {
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
   .contact-page-fit {
     height: auto;
     overflow: visible;
+    background-size: cover;
   }
   .contact-content-fit {
     overflow: visible;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 90px;
+    padding-bottom: 40px;
+    align-items: stretch;
+  }
+  .contact-header-fit {
+    max-width: 100%;
+  }
+  .contact-info {
+    padding: 20px;
+    background-color: rgba(28, 28, 30, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-header-fit .menu-title {
+    font-size: 22px;
+  }
+  .contact-form {
+    padding: 20px;
   }
 }
 /* Menu side copy — reuses builder's headline style */
@@ -1707,4 +1797,56 @@ body,
   border-radius: 50%;
   border: 3px solid var(--color-primary);
   box-shadow: 0 0 20px rgba(232, 121, 47, 0.25);
+}
+/* My Orders — allow scrolling (parent .admin-dashboard is normally locked to 100vh) */
+.my-orders-page {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+@media (max-width: 640px) {
+  .summary-stage {
+    padding: 100px 20px 40px !important;
+  }
+  .summary-panel {
+    padding: 24px 22px;
+    max-width: 100%;
+  }
+  .summary-row {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .builder-footer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media (max-width: 900px) {
+  .orders-table-wrap {
+    padding: 12px;
+  }
+  .orders-table {
+    font-size: 11px;
+  }
+}
+@media (max-width: 640px) {
+  .my-order-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .order-tracker-label {
+    font-size: 9px;
+  }
+  .order-tracker-dot {
+    width: 28px;
+    height: 28px;
+  }
+  .order-tracker-dot svg {
+    width: 14px;
+    height: 14px;
+  }
+  .order-tracker-step.current .order-tracker-dot {
+    width: 32px;
+    height: 32px;
+  }
 }
