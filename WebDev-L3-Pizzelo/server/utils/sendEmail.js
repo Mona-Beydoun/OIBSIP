@@ -1,7 +1,8 @@
-const transporter = require('../config/mailer');
+const getTransporter = require('../config/mailer');
 
 const sendEmail = async (to, subject, html) => {
   try {
+    const transporter = await getTransporter();
     await transporter.sendMail({
       from: `"Pizzelo" <${process.env.EMAIL_USER}>`,
       to,
