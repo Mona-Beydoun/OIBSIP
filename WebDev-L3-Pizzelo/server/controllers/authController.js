@@ -32,17 +32,17 @@ const registerUser = async (req, res) => {
 
     const verifyUrl = `${process.env.CLIENT_URL}/verify-email/${verificationToken}`;
 
-    await sendEmail(
-      email,
-      'Verify your Pizzelo account',
-      `<h2>Welcome to Pizzelo, ${name}!</h2>
-       <p>Please click the link below to verify your email:</p>
-       <a href="${verifyUrl}">${verifyUrl}</a>`
-    );
+  sendEmail(
+  email,
+  'Verify your Pizzelo account',
+  `<h2>Welcome to Pizzelo, ${name}!</h2>
+   <p>Please click the link below to verify your email:</p>
+   <a href="${verifyUrl}">${verifyUrl}</a>`
+);
 
-    res.status(201).json({
-      message: 'Registration successful. Please check your email to verify your account.',
-    });
+res.status(201).json({
+  message: 'Registration successful. Please check your email to verify your account.',
+});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
